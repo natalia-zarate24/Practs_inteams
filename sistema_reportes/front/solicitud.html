@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte Técnico Universitario - Generar Solicitud</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-brand">
+            <img src="../images/logo.png" alt="Logo UPQ" class="logo">
+            <span class="brand-title">Soporte Técnico Universitario</span>
+        </div>
+        <nav class="navbar-menu">
+            <a href="./inicio_usuario.html" class="nav-link">Inicio</a>
+            <a href="./solicitud.html" class="nav-link active">Nueva solicitud</a>
+            <a href="./historial.html" class="nav-link">Historial</a>
+            <a href="./index.html" class="nav-link">Salir</a>
+        </nav>
+    </header>
+
+    <main class="main-container-app">
+        
+        <div class="section-header">
+            <h2>Generar solicitud</h2>
+            <p>Completa los datos para que soporte técnico te atienda.</p>
+        </div>
+
+        <div class="app-grid">
+
+            <div class="card form-card">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="solicitante">Solicitante</label>
+                            <select id="solicitante" class="form-control">
+                                <option value="" disabled selected>Selecciona tu nombre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipo">Equipo</label>
+                            <select id="equipo" class="form-control">
+                                <option value="" disabled selected>Selecciona un equipo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción del problema</label>
+                        <textarea id="descripcion" class="form-control textarea" placeholder="Describe qué sucede con el equipo"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-general">Enviar solicitud</button>
+                        <a href="./inicio_usuario.html" class="btn btn-admin">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="sidebar-column">
+                <div class="card info-card">
+                    <h3>Antes de enviar</h3>
+                    <ul>
+                        <li>Elige el equipo con falla</li>
+                        <li>Explica el problema con detalle</li>
+                        <li>Tu solicitud inicia como Pendiente</li>
+                    </ul>
+                </div>
+
+                <div class="alert-success">
+                    Solicitud enviada correctamente
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
