@@ -30,22 +30,20 @@
         <div class="users-grid">
 
             <div class="card user-form-card">
-                <form action="#" method="POST">
+                <form id="form-usuario" method="POST" novalidate>
                     <div class="form-group">
                         <label for="nombre">Nombre completo</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Ej. Ana Pérez">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej. Ana Pérez">
                     </div>
 
                     <div class="form-group">
                         <label for="correo">Correo electrónico</label>
-                        <input type="email" id="correo" class="form-control" placeholder="ana@upq.edu.mx">
+                        <input type="email" id="correo" name="correo" class="form-control" placeholder="ana@upq.edu.mx">
                     </div>
 
                     <button type="submit" class="btn btn-general">Agregar usuario</button>
 
-                    <div class="alert-success">
-                        Usuario agregado correctamente
-                    </div>
+                    <div id="aviso" role="status" hidden></div>
                 </form>
             </div>
 
@@ -59,39 +57,16 @@
                                 <th>Correo</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ana Pérez</td>
-                                <td>ana@upq.edu.mx</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Luis Ramírez</td>
-                                <td>luis@upq.edu.mx</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Marta Gómez</td>
-                                <td>marta@upq.edu.mx</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Jorge Díaz</td>
-                                <td>jorge@upq.edu.mx</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Sofía Cruz</td>
-                                <td>sofia@upq.edu.mx</td>
-                            </tr>
-                        </tbody>
+                           <tbody id="tabla-usuarios"></tbody>
                     </table>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <script src="../Scripts/avisos.js"></script>
+    <script src="../Scripts/usuarios.js"></script>
 
 </body>
 </html>
