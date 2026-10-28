@@ -18,12 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Impresora RH'
     ];
 
-    // Estado inicial de solicitudes
-    let solicitudes = [
-        { id: 12, usuario: 'Ana Pérez', equipo: 'Laptop LAB-03', problema: 'No enciende', estado: 'Pendiente' },
-        { id: 11, usuario: 'Luis Ramírez', equipo: 'Proyector A-12', problema: 'Sin señal HDMI', estado: 'Pendiente' }
-    ];
-
     // Elementos del DOM
     const selectSolicitante = document.getElementById('solicitante');
     const selectEquipo = document.getElementById('equipo');
@@ -49,8 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // REQUERIMIENTO 5: Mostrar solicitudes registradas (usuario, equipo y estado)
-    function renderizarTabla() {
+    // REQUERIMIENTO 5: Consultar y mostrar solicitudes desde la Base de Datos
+    function cargarSolicitudesDesdeBD() {
+        fetch('../backend/PHP/obtener_solicitudes.php')
+            .then(res => res.json())
+            .then(solicitudes => {
+                renderizarTabla(solicitudes);
+            })
+            .catch(err => console.error('Error al obtener solicitudes:', err));
+    }
+
+    // Renderizar filas en la tabla HTML
+    function renderizarTabla(solicitudes) {
         tablaSolicitudes.innerHTML = '';
 
         solicitudes.forEach(sol => {
@@ -59,14 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${sol.id < 10 ? '0' + sol.id : sol.id}</td>
                 <td>${sol.usuario}</td>
                 <td>${sol.equipo}</td>
-                <td>${sol.problema}</td>
+                <td>${sol.descripcion || sol.problema}</td>
                 <td><span class="badge badge-warning">${sol.estado}</span></td>
             `;
             tablaSolicitudes.appendChild(tr);
         });
     }
 
-    // REQUERIMIENTO 3 y 4: Registrar solicitud con usuario, equipo, descripción y estado automático «Pendiente»
+    // REQUERIMIENTO 3 y 4: Registrar en BD con estado automático «Pendiente»
     formSolicitud.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -77,26 +81,42 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!usuarioVal || !equipoVal || !descripcionVal) return;
 
         const nuevaSolicitud = {
-            id: solicitudes.length > 0 ? solicitudes[0].id + 1 : 1,
             usuario: usuarioVal,
             equipo: equipoVal,
-            problema: descripcionVal,
-            estado: 'Pendiente' // Requerimiento 4: Asignación automática
+            descripcion: descripcionVal
         };
 
-        solicitudes.unshift(nuevaSolicitud);
+        // Enviar a la Base de Datos vía PHP
+        fetch('../backend/PHP/guardar_solicitud.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevaSolicitud)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.exito) {
+                // Mostrar alerta de éxito
+                mensajeExito.style.display = 'block';
+                setTimeout(() => {
+                    mensajeExito.style.display = 'none';
+                }, 3000);
 
-        renderizarTabla();
-        formSolicitud.reset();
-
-        // Mostrar alerta de éxito
-        mensajeExito.style.display = 'block';
-        setTimeout(() => {
-            mensajeExito.style.display = 'none';
-        }, 3000);
+                // Limpiar formulario y recargar tabla desde BD
+                formSolicitud.reset();
+                cargarSolicitudesDesdeBD();
+            } else {
+                alert('Error al guardar en la base de datos: ' + data.mensaje);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la petición AJAX:', error);
+            alert('No se pudo conectar con el servidor.');
+        });
     });
 
     // Inicializar la pantalla
     cargarSelectores();
-    renderizarTabla();
+    cargarSolicitudesDesdeBD();
 });
