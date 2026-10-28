@@ -24,7 +24,17 @@
     <main class="main-container-app">
         <div class="section-header">
             <h2>Historial de solicitudes</h2>
-            <p>Todas las solicitudes que has generado.</p>
+            <p>Elige tu nombre para consultar las solicitudes que has generado.</p>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="filtro-usuario">Ver solicitudes de</label>
+                <select id="filtro-usuario" class="form-control">
+                    <option value="">Todas las personas</option>
+                </select>
+            </div>
+            <div id="aviso" role="status" hidden></div>
         </div>
 
         <div class="card card-table">
@@ -40,52 +50,15 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>12</td>
-                            <td>Laptop LAB-03</td>
-                            <td>No enciende</td>
-                            <td>24/10/2026</td>
-                            <td><span class="badge badge-warning">Pendiente</span></td>
-                            <td class="text-right">
-                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>09</td>
-                            <td>Proyector A-12</td>
-                            <td>Sin señal HDMI</td>
-                            <td>21/10/2026</td>
-                            <td><span class="badge badge-info">En proceso</span></td>
-                            <td class="text-right">
-                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>07</td>
-                            <td>PC Biblioteca 4</td>
-                            <td>Teclado dañado</td>
-                            <td>15/10/2026</td>
-                            <td><span class="badge badge-success">Resuelta</span></td>
-                            <td class="text-right">
-                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>Impresora RH</td>
-                            <td>Atasco de papel</td>
-                            <td>02/10/2026</td>
-                            <td><span class="badge badge-success">Resuelta</span></td>
-                            <td class="text-right">
-                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabla-historial"></tbody>
                 </table>
             </div>
         </div>
     </main>
+
+    <script src="../Scripts/avisos.js"></script>
+    <script src="../Scripts/estados.js"></script>
+    <script src="../Scripts/historial.js"></script>
 
 </body>
 </html>

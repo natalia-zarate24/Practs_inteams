@@ -684,3 +684,13 @@ select.form-control {
 }
 
 }
+/* Estado: Cancelada (rojo claro) */
+.badge-danger {
+    background-color: #fce8e6;
+    color: #b3261e;
+}
+
+/* Observaciones del técnico: una por línea */
+.observation-box p + p {
+    margin-top: 8px;
+}

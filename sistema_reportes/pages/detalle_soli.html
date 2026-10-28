@@ -24,7 +24,7 @@
     <main class="main-container-app">
 
         <div class="section-header">
-            <h2>Solicitud n.º 12</h2>
+            <h2 id="titulo-solicitud">Solicitud</h2>
             <p>Detalle y estado de atención.</p>
         </div>
 
@@ -33,31 +33,29 @@
             <div class="detail-info-row">
                 <div class="detail-group">
                     <span class="detail-label">Equipo</span>
-                    <span class="detail-value">Laptop LAB-03</span>
+                    <span class="detail-value" id="detalle-equipo"></span>
                 </div>
                 <div class="detail-group">
                     <span class="detail-label">Fecha</span>
-                    <span class="detail-value">24/10/2026</span>
+                    <span class="detail-value" id="detalle-fecha"></span>
                 </div>
                 <div class="detail-group">
                     <span class="detail-label">Estado</span>
-                    <div>
-                        <span class="badge badge-pending">Pendiente</span>
-                    </div>
+                    <div id="detalle-estado"></div>
                 </div>
             </div>
 
             <div class="detail-section">
                 <span class="detail-label">Descripción del problema</span>
-                <p class="detail-text">La laptop no enciende aunque está conectada al cargador.</p>
+                <p class="detail-text" id="detalle-descripcion"></p>
             </div>
 
             <div class="detail-section">
                 <span class="detail-label">Observación del técnico</span>
-                <div class="observation-box">
-                    Aún sin observaciones.
-                </div>
+                <div class="observation-box" id="detalle-observacion"></div>
             </div>
+
+            <div id="aviso" role="status" hidden></div>
 
             <div class="detail-actions">
                 <a href="historial.html" class="btn btn-admin">Volver al historial</a>
@@ -65,6 +63,10 @@
 
         </div>
     </main>
+
+    <script src="../Scripts/avisos.js"></script>
+    <script src="../Scripts/estados.js"></script>
+    <script src="../Scripts/detalle_soli.js"></script>
 
 </body>
 </html>

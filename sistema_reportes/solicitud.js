@@ -1,28 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // REQUERIMIENTO 1: Usuarios disponibles
-    const usuarios = [
-        'Ana Pérez',
-        'Luis Ramírez',
-        'Marta Gómez',
-        'Jorge Díaz',
-        'Sofía Cruz'
-    ];
+    // const usuarios = [
+    //     'Ana Pérez',
+    //     'Luis Ramírez',
+    //     'Marta Gómez',
+    //     'Jorge Díaz',
+    //     'Sofía Cruz'
+    // ];
 
-    // REQUERIMIENTO 2: Equipos disponibles
-    const equipos = [
-        'Laptop LAB-03',
-        'Proyector A-12',
-        'PC Biblioteca 4',
-        'Router piso 2',
-        'Impresora RH'
-    ];
+    // // REQUERIMIENTO 2: Equipos disponibles
+    // const equipos = [
+    //     'Laptop LAB-03',
+    //     'Proyector A-12',
+    //     'PC Biblioteca 4',
+    //     'Router piso 2',
+    //     'Impresora RH'
+    // ];
 
-    // Datos locales de respaldo por si el PHP aún no está listo
-    let solicitudesLocales = [
-        { id: 12, usuario: 'Ana Pérez', equipo: 'Laptop LAB-03', descripcion: 'No enciende', estado: 'Pendiente' },
-        { id: 11, usuario: 'Luis Ramírez', equipo: 'Proyector A-12', descripcion: 'Sin señal HDMI', estado: 'Pendiente' }
-    ];
+    // // Datos locales de respaldo por si el PHP aún no está listo
+    // let solicitudesLocales = [
+    //     { id: 12, usuario: 'Ana Pérez', equipo: 'Laptop LAB-03', descripcion: 'No enciende', estado: 'Pendiente' },
+    //     { id: 11, usuario: 'Luis Ramírez', equipo: 'Proyector A-12', descripcion: 'Sin señal HDMI', estado: 'Pendiente' }
+    // ];
 
     // Elementos del DOM
     const selectSolicitante = document.getElementById('solicitante');

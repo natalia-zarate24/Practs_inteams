@@ -21,7 +21,7 @@
 
     <main class="main-container-app">
         <div class="section-header">
-            <h2>Solicitud n.º 12</h2>
+            <h2 id="titulo-solicitud">Solicitud</h2>
             <p>Cambia el estado y agrega una observación.</p>
         </div>
 
@@ -30,39 +30,37 @@
             <div class="card info-summary-card">
                 <div class="detail-group">
                     <span class="detail-label">Solicitante</span>
-                    <span class="detail-value">Ana Pérez</span>
+                    <span class="detail-value" id="resumen-usuario"></span>
                 </div>
                 <div class="detail-group">
                     <span class="detail-label">Equipo</span>
-                    <span class="detail-value">Laptop LAB-03</span>
+                    <span class="detail-value" id="resumen-equipo"></span>
                 </div>
                 <div class="detail-group">
                     <span class="detail-label">Problema</span>
-                    <span class="detail-text">No enciende aunque está conectada</span>
+                    <span class="detail-text" id="resumen-problema"></span>
                 </div>
                 <div class="detail-group">
                     <span class="detail-label">Estado actual</span>
-                    <div>
-                        <span class="badge badge-pending">Pendiente</span>
-                    </div>
+                    <div id="resumen-estado"></div>
                 </div>
             </div>
 
             <div class="sidebar-column">
                 <div class="card">
-                    <form>
+                    <form id="form-actualizar" novalidate>
                         <div class="form-group">
                             <label for="nuevo-estado">Nuevo estado</label>
-                            <select id="nuevo-estado" class="form-control">
+                            <select id="nuevo-estado" name="estado" class="form-control">
                                 <option value="proceso" selected>En proceso</option>
-                                <option value="resuelto">Resuelto</option>
+                                <option value="resuelto">Resuelta</option>
                                 <option value="rechazado">Rechazado</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="observacion">Observación sobre la atención</label>
-                            <textarea id="observacion" class="form-control textarea" placeholder="Escribe lo que se hizo o falta por hacer"></textarea>
+                            <textarea id="observacion" name="observacion" class="form-control textarea" placeholder="Escribe lo que se hizo o falta por hacer"></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -72,13 +70,15 @@
                     </form>
                 </div>
 
-                <div class="alert-success">
-                    Cambios guardados. Estado: En proceso
-                </div>
+                <div id="aviso" role="status" hidden></div>
             </div>
 
         </div>
     </main>
+
+    <script src="../Scripts/avisos.js"></script>
+    <script src="../Scripts/estados.js"></script>
+    <script src="../Scripts/actualizar_soli.js"></script>
 
 </body>
 </html>

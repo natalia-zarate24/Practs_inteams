@@ -1,19 +1,36 @@
 <?php
-// backend/PHP/obtener_solicitudes.php
-header("Content-Type: application/json; charset=utf-8");
-require_once "../DB/conexion.php"; // O la ruta a tu conexion.php
+/* GET  obtener_solicitudes.php                -> todas las solicitudes
+   GET  obtener_solicitudes.php?id_usuario=N   -> solicitudes de un usuario
+   GET  obtener_solicitudes.php?id=N           -> una solicitud con sus observaciones */
+require_once __DIR__ . '/functions.php';
 
-$sql = "SELECT id, usuario, equipo, descripcion, estado FROM solicitudes ORDER BY id DESC";
-$resultado = $conn->query($sql);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$solicitudes = [];
+header('Content-Type: application/json; charset=utf-8');
 
-if ($resultado && $resultado->num_rows > 0) {
-    while ($fila = $resultado->fetch_assoc()) {
-        $solicitudes[] = $fila;
+try {
+  if (isset($_GET['id'])) {
+    $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
+    $solicitud = ($id === false) ? null : obtenerSolicitud($id);
+    if ($solicitud === null) {
+      http_response_code(404);
+      echo json_encode(['ok' => false, 'mensaje' => 'La solicitud no existe.']);
+    } else {
+      echo json_encode(['ok' => true, 'datos' => $solicitud]);
     }
+  } else {
+    $idUsuario = null;
+    if (isset($_GET['id_usuario'])) {
+      $idUsuario = filter_var($_GET['id_usuario'], FILTER_VALIDATE_INT);
+      if ($idUsuario === false) {
+        http_response_code(400);
+        echo json_encode(['ok' => false, 'mensaje' => 'Usuario no válido.']);
+        exit;
+      }
+    }
+    echo json_encode(['ok' => true, 'datos' => listarSolicitudes($idUsuario)]);
+  }
+} catch (Throwable $e) {
+  http_response_code(500);
+  echo json_encode(['ok' => false, 'mensaje' => 'Error del servidor: ' . $e->getMessage()]);
 }
-
-echo json_encode($solicitudes, JSON_UNESCAPED_UNICODE);
-$conn->close();
-?>

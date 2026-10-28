@@ -27,6 +27,8 @@
             <p>Selecciona una solicitud para actualizar su estado.</p>
         </header>
 
+        <div id="aviso" role="status" hidden></div>
+
         <div class="card card-table">
             <div class="table-responsive">
                 <table class="styled-table">
@@ -40,52 +42,15 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>12</td>
-                            <td>Ana Pérez</td>
-                            <td>Laptop LAB-03</td>
-                            <td>No enciende</td>
-                            <td><span class="badge badge-warning">Pendiente</span></td>
-                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>Luis Ramírez</td>
-                            <td>Proyector A-12</td>
-                            <td>Sin señal HDMI</td>
-                            <td><span class="badge badge-info">En proceso</span></td>
-                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Marta Gómez</td>
-                            <td>PC Biblioteca 4</td>
-                            <td>Teclado dañado</td>
-                            <td><span class="badge badge-success">Resuelta</span></td>
-                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
-                        </tr>
-                        <tr>
-                            <td>09</td>
-                            <td>Jorge Díaz</td>
-                            <td>Router piso 2</td>
-                            <td>Sin internet</td>
-                            <td><span class="badge badge-warning">Pendiente</span></td>
-                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
-                        </tr>
-                        <tr>
-                            <td>08</td>
-                            <td>Sofía Cruz</td>
-                            <td>Impresora RH</td>
-                            <td>Atasco de papel</td>
-                            <td><span class="badge badge-success">Resuelta</span></td>
-                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabla-seguimiento"></tbody>
                 </table>
             </div>
         </div>
     </main>
+
+    <script src="../Scripts/avisos.js"></script>
+    <script src="../Scripts/estados.js"></script>
+    <script src="../Scripts/seguimiento.js"></script>
 
 </body>
 </html>
