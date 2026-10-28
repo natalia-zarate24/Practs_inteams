@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte Técnico Universitario - Equipos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Barra superior institucional -->
+    <header class="navbar">
+        <div class="navbar-brand">
+            <img src="https://via.placeholder.com/40" alt="Logo UPQ" class="logo">
+            <span class="brand-title">Soporte Técnico Universitario</span>
+        </div>
+        <nav class="navbar-menu">
+            <a href="#" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link active">Usuarios y equipos</a>
+            <a href="#" class="nav-link">Seguimiento</a>
+            <a href="#" class="nav-link">Salir</a>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-container-app">
+        <div class="section-header">
+            <h2>Equipos</h2>
+            <p>Registra un equipo nuevo y consulta el catálogo.</p>
+        </div>
+
+        <div class="app-grid">
+            
+            <!-- Formulario para registrar equipo -->
+            <div class="card form-card">
+                <form>
+                    <div class="form-group">
+                        <label for="nombre-equipo">Nombre del equipo</label>
+                        <input type="text" id="nombre-equipo" class="form-control" placeholder="Ej. Laptop LAB-03">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" id="stock" class="form-control" value="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion-equipo">Descripción</label>
+                        <textarea id="descripcion-equipo" class="form-control textarea" placeholder="Marca, modelo, ubicación"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-general">Agregar equipo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabla de catálogo de equipos -->
+            <div class="card table-card">
+                <div class="table-responsive">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Stock</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Laptop LAB-03</td>
+                                <td>2</td>
+                                <td>Dell 14", Lab 3</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Proyector A-12</td>
+                                <td>1</td>
+                                <td>Epson, Aula 12</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>PC Biblioteca 4</td>
+                                <td>5</td>
+                                <td>HP All-in-One</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Impresora RH</td>
+                                <td>1</td>
+                                <td>Láser, Recursos H.</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Router piso 2</td>
+                                <td>3</td>
+                                <td>TP-Link, Edificio B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
