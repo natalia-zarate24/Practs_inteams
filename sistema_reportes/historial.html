@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte Técnico Universitario - Historial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-brand">
+            <img src="logo.png" alt="Logo Universidad" class="logo">
+            <span class="brand-title">Soporte Técnico Universitario</span>
+        </div>
+        <nav class="navbar-menu">
+            <a href="./inicio_usuario.html" class="nav-link">Inicio</a>
+            <a href="./solicitud.html" class="nav-link">Nueva solicitud</a>
+            <a href="./historial.html" class="nav-link active">Historial</a>
+            <a href="./index.html" class="nav-link">Salir</a>
+        </nav>
+    </header>
+
+    <main class="main-container-app">
+        <div class="section-header">
+            <h2>Historial de solicitudes</h2>
+            <p>Todas las solicitudes que has generado.</p>
+        </div>
+
+        <div class="card card-table">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>N.º</th>
+                            <th>Equipo</th>
+                            <th>Problema</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Laptop LAB-03</td>
+                            <td>No enciende</td>
+                            <td>24/10/2026</td>
+                            <td><span class="badge badge-warning">Pendiente</span></td>
+                            <td class="text-right">
+                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>09</td>
+                            <td>Proyector A-12</td>
+                            <td>Sin señal HDMI</td>
+                            <td>21/10/2026</td>
+                            <td><span class="badge badge-info">En proceso</span></td>
+                            <td class="text-right">
+                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>07</td>
+                            <td>PC Biblioteca 4</td>
+                            <td>Teclado dañado</td>
+                            <td>15/10/2026</td>
+                            <td><span class="badge badge-success">Resuelta</span></td>
+                            <td class="text-right">
+                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>Impresora RH</td>
+                            <td>Atasco de papel</td>
+                            <td>02/10/2026</td>
+                            <td><span class="badge badge-success">Resuelta</span></td>
+                            <td class="text-right">
+                                <a href="detalle_soli.html" class="link-action">Ver detalle</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
