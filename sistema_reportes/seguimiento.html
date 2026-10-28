@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Solicitudes - Soporte Técnico Universitario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-brand">
+            <img src="https://via.placeholder.com/40" alt="Logo UPQ" class="logo">
+            <span class="brand-title">Soporte Técnico Universitario</span>
+        </div>
+        <nav class="navbar-menu">
+            <a href="./inicio_admin.html" class="nav-link">Inicio</a>
+            <a href="./usuarios_equipos.html" class="nav-link">Usuarios y equipos</a>
+            <a href="./seguimiento.html" class="nav-link active">Seguimiento</a>
+            <a href="./index.html" class="nav-link">Salir</a>
+        </nav>
+    </header>
+
+    <main class="main-container-app">
+        <header class="section-header">
+            <h2>Seguimiento de solicitudes</h2>
+            <p>Selecciona una solicitud para actualizar su estado.</p>
+        </header>
+
+        <div class="card card-table">
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>N.º</th>
+                            <th>Usuario</th>
+                            <th>Equipo</th>
+                            <th>Problema</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Ana Pérez</td>
+                            <td>Laptop LAB-03</td>
+                            <td>No enciende</td>
+                            <td><span class="badge badge-warning">Pendiente</span></td>
+                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Luis Ramírez</td>
+                            <td>Proyector A-12</td>
+                            <td>Sin señal HDMI</td>
+                            <td><span class="badge badge-info">En proceso</span></td>
+                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Marta Gómez</td>
+                            <td>PC Biblioteca 4</td>
+                            <td>Teclado dañado</td>
+                            <td><span class="badge badge-success">Resuelta</span></td>
+                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
+                        </tr>
+                        <tr>
+                            <td>09</td>
+                            <td>Jorge Díaz</td>
+                            <td>Router piso 2</td>
+                            <td>Sin internet</td>
+                            <td><span class="badge badge-warning">Pendiente</span></td>
+                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
+                        </tr>
+                        <tr>
+                            <td>08</td>
+                            <td>Sofía Cruz</td>
+                            <td>Impresora RH</td>
+                            <td>Atasco de papel</td>
+                            <td><span class="badge badge-success">Resuelta</span></td>
+                            <td class="text-right"><a href="actualizar_soli.html" class="link-action">Actualizar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

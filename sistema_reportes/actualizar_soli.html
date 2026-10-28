@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte Técnico Universitario - Actualizar solicitud</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-brand">
+        <img src="../images/logo.png" alt="Logo UPQ" class="logo">        </div>
+        <nav class="navbar-menu">
+            <a href="#" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Usuarios y equipos</a>
+            <a href="#" class="nav-link active">Seguimiento</a>
+            <a href="#" class="nav-link">Salir</a>
+        </nav>
+    </header>
+
+    <main class="main-container-app">
+        <div class="section-header">
+            <h2>Solicitud n.º 12</h2>
+            <p>Cambia el estado y agrega una observación.</p>
+        </div>
+
+        <div class="app-grid">
+
+            <div class="card info-summary-card">
+                <div class="detail-group">
+                    <span class="detail-label">Solicitante</span>
+                    <span class="detail-value">Ana Pérez</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Equipo</span>
+                    <span class="detail-value">Laptop LAB-03</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Problema</span>
+                    <span class="detail-text">No enciende aunque está conectada</span>
+                </div>
+                <div class="detail-group">
+                    <span class="detail-label">Estado actual</span>
+                    <div>
+                        <span class="badge badge-pending">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-column">
+                <div class="card">
+                    <form>
+                        <div class="form-group">
+                            <label for="nuevo-estado">Nuevo estado</label>
+                            <select id="nuevo-estado" class="form-control">
+                                <option value="proceso" selected>En proceso</option>
+                                <option value="resuelto">Resuelto</option>
+                                <option value="rechazado">Rechazado</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacion">Observación sobre la atención</label>
+                            <textarea id="observacion" class="form-control textarea" placeholder="Escribe lo que se hizo o falta por hacer"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-general">Guardar cambios</button>
+                            <a href="seguimiento.html" class="btn btn-admin text-center">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="alert-success">
+                    Cambios guardados. Estado: En proceso
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
