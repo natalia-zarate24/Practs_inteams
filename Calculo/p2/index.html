@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuenca 100×100, libreta de campo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="modelo.js"></script>
+    <script src="dibujo.js"></script>
+    <script src="exportar.js"></script>
+    <script src="index.js" defer></script>
+  </head>
+  <body data-tema="claro">
+    <noscript
+      >Esta página necesita JavaScript para calcular la cuenca.</noscript
+    >
+
+    <header class="barra">
+      <div class="marca">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 30c6-2 8-10 16-12s12 6 18 4 6-8 6-8" />
+            <path d="M4 37c8-2 11-10 18-12s11 5 17 3 5-6 5-6" opacity=".6" />
+            <path d="M4 44c9-2 13-10 20-12s10 4 16 2 4-4 4-4" opacity=".35" />
+          </g>
+          <path
+            d="M30 4c4 6 7 9 0 14"
+            fill="none"
+            stroke="var(--marca)"
+            stroke-width="2.4"
+            stroke-linecap="round"
+          />
+        </svg>
+        <div>
+          <h1>Cuenca 100×100</h1>
+          <p>Libreta de campo para el modelo de elevaciones</p>
+        </div>
+      </div>
+      <div class="herramientas">
+        <button
+          id="btnUndo"
+          class="icono"
+          title="Deshacer (Ctrl+Z)"
+          aria-label="Deshacer"
+          disabled
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 14 4 9l5-5" />
+            <path d="M4 9h10a6 6 0 0 1 0 12h-3" />
+          </svg>
+        </button>
+        <button
+          id="btnRedo"
+          class="icono"
+          title="Rehacer (Ctrl+Y)"
+          aria-label="Rehacer"
+          disabled
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m15 14 5-5-5-5" />
+            <path d="M20 9H10a6 6 0 0 0 0 12h3" />
+          </svg>
+        </button>
+        <span id="estadoGuardado" class="guardado" role="status"
+          >Sin guardar</span
+        >
+        <button
+          id="btnTema"
+          class="icono"
+          title="Cambiar tema"
+          aria-label="Cambiar entre tema claro y nocturno"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 3v18" />
+            <path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" />
+          </svg>
+        </button>
+        <button id="btnZip" class="boton primario">
+          Descargar paquete .zip
+        </button>
+      </div>
+    </header>
+
+    <main class="espacio">
+      <!-- ============ VISOR: mapa fijo ============ -->
+      <section class="visor" aria-label="Mapa del terreno">
+        <div class="barra-visor">
+          <div
+            class="seg"
+            id="segVista"
+            role="group"
+            aria-label="Qué se muestra en el mapa"
+          >
+            <button data-vista="z" aria-pressed="true">Elevación</button>
+            <button data-vista="theta" aria-pressed="false">Pendiente</button>
+            <button data-vista="d8" aria-pressed="false">Flujo D8</button>
+            <button data-vista="acc" aria-pressed="false">Acumulación</button>
+          </div>
+          <div class="seg" id="segModo" role="group" aria-label="Tipo de vista">
+            <button data-modo="2d" aria-pressed="true">2D</button>
+            <button data-modo="3d" aria-pressed="false">3D</button>
+          </div>
+        </div>
+
+        <div class="chips" id="chips" role="group" aria-label="Capas del mapa">
+          <button class="chip" data-capa="contornos" aria-pressed="false">
+            Curvas de nivel
+          </button>
+          <button class="chip" data-capa="parteaguas" aria-pressed="true">
+            Parteaguas
+          </button>
+          <button class="chip" data-capa="cauces" aria-pressed="true">
+            Cauces
+          </button>
+          <button class="chip" data-capa="principal" aria-pressed="true">
+            Cauce principal
+          </button>
+          <button class="chip" data-capa="flechas" aria-pressed="false">
+            Flechas
+          </button>
+        </div>
+
+        <div class="fila3d" id="fila3d" hidden>
+          <label
+            >Giro <output id="eAz">-30</output>°<input
+              type="range"
+              id="campoAz"
+              min="-180"
+              max="180"
+              value="-30"
+          /></label>
+          <label
+            >Inclinación <output id="eInc">50</output>°<input
+              type="range"
+              id="campoInc"
+              min="10"
+              max="90"
+              value="50"
+          /></label>
+          <label
+            >Exageración <output id="eEx">2</output>×<input
+              type="range"
+              id="campoEx"
+              min="1"
+              max="6"
+              step=".5"
+              value="2"
+          /></label>
+        </div>
+
+        <div class="hoja">
+          <div class="regla regla-y" id="reglaY" aria-hidden="true"></div>
+          <div class="marco">
+            <canvas
+              id="lienzo"
+              width="600"
+              height="600"
+              aria-label="Mapa 2D del raster. Haz clic en una celda para inspeccionarla."
+            ></canvas>
+            <canvas
+              id="lienzo3d"
+              width="600"
+              height="600"
+              hidden
+              aria-label="Vista 3D del terreno"
+            ></canvas>
+            <div class="pista" id="pista" hidden>
+              Haz clic en una celda para fijar la salida. Esc cancela.
+            </div>
+          </div>
+          <span></span>
+          <div class="regla regla-x" id="reglaX" aria-hidden="true"></div>
+        </div>
+        <p class="escala" id="escala"></p>
+        <p class="sonda" id="sonda">
+          Pasa el cursor sobre el mapa para leer una celda.
+        </p>
+      </section>
+
+      <!-- ============ LIBRETA: pestañas por paso ============ -->
+      <section class="libreta">
+        <nav
+          class="pestanas"
+          role="tablist"
+          aria-label="Pasos del proyecto"
+          id="pestanas"
+        >
+          <button
+            role="tab"
+            id="t-terreno"
+            data-tab="terreno"
+            aria-controls="tab-terreno"
+            aria-selected="true"
+          >
+            <b>1</b><span>Terreno</span><small>Pasos 1 y 2</small>
+          </button>
+          <button
+            role="tab"
+            id="t-flujo"
+            data-tab="flujo"
+            aria-controls="tab-flujo"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <b>2</b><span>Flujo</span><small>Pasos 3 a 6</small>
+          </button>
+          <button
+            role="tab"
+            id="t-cuenca"
+            data-tab="cuenca"
+            aria-controls="tab-cuenca"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <b>3</b><span>Cuenca</span><small>Pasos 7 y 8</small>
+          </button>
+          <button
+            role="tab"
+            id="t-gasto"
+            data-tab="gasto"
+            aria-controls="tab-gasto"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <b>4</b><span>Gasto</span><small>Paso 9</small>
+          </button>
+          <button
+            role="tab"
+            id="t-proyecto"
+            data-tab="proyecto"
+            aria-controls="tab-proyecto"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <b>5</b><span>Proyecto</span><small>Guardar y entregar</small>
+          </button>
+        </nav>
+
+        <div class="paneles">
+          <!-- ===== 1. TERRENO ===== -->
+          <div role="tabpanel" id="tab-terreno" aria-labelledby="t-terreno">
+            <section class="grupo">
+              <h2>Malla y función</h2>
+              <div class="dos">
+                <label
+                  >Espaciamiento Δ [m]
+                  <input
+                    type="number"
+                    id="campoDx"
+                    value="10"
+                    min="1"
+                    max="50"
+                    step="1"
+                  />
+                </label>
+                <label
+                  >Rugosidad B [m]
+                  <input
+                    type="number"
+                    id="campoB"
+                    value="15"
+                    min="0"
+                    max="40"
+                    step="1"
+                  />
+                </label>
+              </div>
+              <p class="nota" id="infoMalla"></p>
+              <p class="nota">
+                z = z₀ + s·y + H[1 − cos(π(x − xc)/W)] + B sin(x/a) sin(y/b) +
+                colinas gaussianas.
+              </p>
+              <div class="acciones">
+                <button id="botonRestaurar" class="boton">
+                  Cargar terreno de ejemplo
+                </button>
+                <button id="botonAleatorio" class="boton claro">
+                  Generar terreno aleatorio
+                </button>
+              </div>
+            </section>
+
+            <section class="grupo">
+              <h2>Editar un punto</h2>
+              <div class="tres">
+                <label
+                  >x (0 a 99)<input type="number" id="campoX" min="0" max="99"
+                /></label>
+                <label
+                  >y (0 a 99)<input type="number" id="campoY" min="0" max="99"
+                /></label>
+                <label
+                  >z [m]<input
+                    type="number"
+                    id="campoZ"
+                    step="any"
+                    placeholder="al azar"
+                /></label>
+              </div>
+              <div class="acciones">
+                <button id="botonAplicar" class="boton claro">
+                  Aplicar punto
+                </button>
+              </div>
+              <p class="nota">
+                También puedes hacer clic en una celda del mapa para cargar sus
+                valores. Deja z vacío para usar un valor al azar.
+              </p>
+            </section>
+
+            <section class="grupo">
+              <h2>Inspector de celda</h2>
+              <label
+                >Dirección u: <output id="eAng">0</output>° desde el eje x
+                <input type="range" id="campoAng" min="0" max="359" value="0" />
+              </label>
+              <div id="inspector" class="inspector"></div>
+            </section>
+
+            <section class="grupo">
+              <h2>Verificación del terreno</h2>
+              <dl class="datos">
+                <dt>Elevación mínima</dt>
+                <dd><span id="etiquetaMinimo">0</span> m</dd>
+                <dt>Elevación máxima</dt>
+                <dd><span id="etiquetaMaximo">0</span> m</dd>
+                <dt>
+                  Error máximo de fx y fy (analítico contra diferencias finitas)
+                </dt>
+                <dd><span id="etiquetaError">0</span> m/m</dd>
+              </dl>
+            </section>
+          </div>
+
+          <!-- ===== 2. FLUJO ===== -->
+          <div role="tabpanel" id="tab-flujo" aria-labelledby="t-flujo" hidden>
+            <section class="grupo">
+              <h2>Qué hace cada paso</h2>
+              <dl class="explica">
+                <dt>Paso 3, relleno</dt>
+                <dd>
+                  Sube cada pozo hasta su punto de desborde para que el agua
+                  siempre encuentre salida.
+                </dd>
+                <dt>Paso 4, pendiente</dt>
+                <dd>
+                  Gradiente por diferencias centrales: S = ‖∇z‖ y θ = arctan S.
+                </dd>
+                <dt>Paso 5, D8</dt>
+                <dd>
+                  Cada celda manda su agua al vecino de mayor descenso, versión
+                  discreta de −∇z.
+                </dd>
+                <dt>Paso 6, acumulación</dt>
+                <dd>A(c) cuenta las celdas cuyo escurrimiento pasa por c.</dd>
+              </dl>
+              <p class="nota">
+                Cambia lo que ves con los botones de arriba del mapa.
+              </p>
+            </section>
+            <section class="grupo">
+              <h2>Estado actual del flujo</h2>
+              <div id="flujoInfo"></div>
+            </section>
+            <section class="grupo">
+              <h2>Leyenda del mapa</h2>
+              <div class="paleta" id="vistaPaleta"></div>
+              <p class="nota" id="leyenda"></p>
+            </section>
+          </div>
+
+          <!-- ===== 3. CUENCA ===== -->
+          <div
+            role="tabpanel"
+            id="tab-cuenca"
+            aria-labelledby="t-cuenca"
+            hidden
+          >
+            <section class="grupo">
+              <h2>Salida y cauces</h2>
+              <p class="dato" id="infoSalida"></p>
+              <div class="acciones">
+                <button id="btnPick" class="boton claro">
+                  Elegir salida en el mapa
+                </button>
+                <button id="btnAuto" class="boton claro">
+                  Usar salida automática
+                </button>
+              </div>
+              <label class="ancho"
+                >Umbral de cauce U [celdas]
+                <input type="number" id="campoU" value="100" min="1" step="1" />
+              </label>
+              <p class="nota">
+                La salida automática es la celda del borde con más acumulación.
+                Una celda es cauce si A(c) ≥ U.
+              </p>
+            </section>
+            <section class="grupo">
+              <h2>Resultados de la cuenca</h2>
+              <div id="resultados"></div>
+            </section>
+            <section class="grupo">
+              <h2>Perfil del cauce principal</h2>
+              <canvas
+                id="cvPerfil"
+                width="440"
+                height="270"
+                aria-label="Perfil longitudinal del cauce principal"
+              ></canvas>
+            </section>
+            <section class="grupo">
+              <h2>Preguntas de cálculo multivariable</h2>
+              <div id="comparaciones"></div>
+            </section>
+          </div>
+
+          <!-- ===== 4. GASTO ===== -->
+          <div role="tabpanel" id="tab-gasto" aria-labelledby="t-gasto" hidden>
+            <section class="grupo">
+              <h2>Lluvia y escurrimiento</h2>
+              <div class="dos">
+                <label
+                  >Coeficiente C (0 a 1)
+                  <input
+                    type="number"
+                    id="campoC"
+                    value="0.5"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                  />
+                </label>
+                <label
+                  >Intensidades i [mm/h]
+                  <input type="text" id="campoI" value="30, 60, 90, 120" />
+                </label>
+              </div>
+              <p class="nota">
+                Escribe las intensidades separadas por comas. La duración de la
+                tormenta se toma igual a tc.
+              </p>
+            </section>
+            <section class="grupo">
+              <h2>Tiempo de concentración</h2>
+              <p class="grande" id="tcBadge"></p>
+              <p class="nota">
+                Kirpich: tc = 0.0195 · L<sup>0.77</sup> · S<sub>med</sub
+                ><sup>−0.385</sup>, con L en m y tc en minutos.
+              </p>
+            </section>
+            <section class="grupo">
+              <h2>Gasto de pico (método racional)</h2>
+              <div id="tablaGasto"></div>
+              <p class="nota" id="notaGasto"></p>
+            </section>
+            <section class="grupo">
+              <h2>Q contra i</h2>
+              <canvas
+                id="cvGasto"
+                width="440"
+                height="270"
+                aria-label="Gráfica del gasto contra la intensidad"
+              ></canvas>
+            </section>
+          </div>
+
+          <!-- ===== 5. PROYECTO ===== -->
+          <div
+            role="tabpanel"
+            id="tab-proyecto"
+            aria-labelledby="t-proyecto"
+            hidden
+          >
+            <section class="grupo">
+              <h2>Datos del equipo</h2>
+              <label class="ancho"
+                >Nombre del equipo<input
+                  type="text"
+                  id="campoEquipo"
+                  autocomplete="off"
+              /></label>
+              <label class="ancho"
+                >Integrantes<input
+                  type="text"
+                  id="campoIntegrantes"
+                  autocomplete="off"
+                  placeholder="Un nombre por coma"
+              /></label>
+              <label class="ancho"
+                >Análisis y conclusiones (van al reporte)
+                <textarea
+                  id="campoNotas"
+                  rows="5"
+                  placeholder="¿Cómo cambian A, L, Smed, tc y Q al cambiar Δ o los parámetros del terreno?"
+                ></textarea>
+              </label>
+            </section>
+
+            <section class="grupo">
+              <h2>Versiones guardadas</h2>
+              <div class="fila-guardar">
+                <input
+                  type="text"
+                  id="campoNombreVersion"
+                  placeholder="Nombre de la versión"
+                  aria-label="Nombre de la versión"
+                />
+                <button id="btnGuardarVersion" class="boton">
+                  Guardar versión
+                </button>
+              </div>
+              <ul class="lista" id="listaVersiones"></ul>
+              <div id="comparacion"></div>
+              <div class="acciones">
+                <button id="btnCsvComp" class="boton claro">
+                  Descargar comparación (CSV)
+                </button>
+              </div>
+            </section>
+
+            <section class="grupo">
+              <h2>Experimento rápido</h2>
+              <p class="nota">
+                Repite el cálculo variando un parámetro, sin tocar tu terreno
+                actual. Sirve para el análisis del entregable 3.
+              </p>
+              <div class="dos">
+                <label
+                  >Parámetro
+                  <select id="bParam">
+                    <option value="dx">Espaciamiento Δ [m]</option>
+                    <option value="B">Rugosidad B [m]</option>
+                    <option value="U">Umbral de cauce U</option>
+                    <option value="C">Coeficiente C</option>
+                  </select>
+                </label>
+                <label
+                  >Valores
+                  <input type="text" id="bValores" value="5, 10, 15, 20" />
+                </label>
+              </div>
+              <div class="acciones">
+                <button id="bEjecutar" class="boton">Ejecutar</button>
+                <button id="bCsv" class="boton claro" disabled>
+                  Descargar CSV
+                </button>
+              </div>
+              <div id="bTabla"></div>
+            </section>
+
+            <section class="grupo">
+              <h2>Historial de cambios</h2>
+              <p class="nota">
+                Cada cambio queda registrado. Haz clic en uno para volver a ese
+                punto. También puedes usar Ctrl+Z y Ctrl+Y.
+              </p>
+              <ol class="historial" id="listaHistorial"></ol>
+            </section>
+
+            <section class="grupo">
+              <h2>Exportar</h2>
+              <div class="exporta">
+                <button id="btnExpZip" class="boton primario">
+                  Paquete completo (.zip)
+                </button>
+                <button id="btnExpReporte" class="boton">
+                  Reporte para imprimir o guardar en PDF
+                </button>
+                <button id="btnExpPNG2D" class="boton claro">
+                  Mapa actual (PNG)
+                </button>
+                <button id="btnExpFiguras" class="boton claro">
+                  Las 4 figuras de la guía (PNG)
+                </button>
+                <button id="btnExpDEM" class="boton claro">
+                  Raster completo (CSV)
+                </button>
+                <button id="btnExpCSV" class="boton claro">
+                  Resultados (CSV)
+                </button>
+                <button id="btnExpJSON" class="boton claro">
+                  Proyecto completo (JSON)
+                </button>
+              </div>
+              <p class="nota">
+                El paquete incluye el reporte, las cuatro figuras, el raster, el
+                cauce principal, los resultados, la comparación de versiones y
+                el proyecto en JSON.
+              </p>
+            </section>
+
+            <section class="grupo">
+              <h2>Datos</h2>
+              <p class="nota">
+                Todo se guarda solo en este navegador. Descarga el JSON para
+                llevarte el proyecto a otra computadora.
+              </p>
+              <div class="acciones">
+                <button id="btnImportar" class="boton claro">
+                  Abrir proyecto (JSON)
+                </button>
+                <button id="btnReiniciar" class="boton peligro">
+                  Borrar todo y empezar de cero
+                </button>
+              </div>
+              <input
+                type="file"
+                id="archivoJSON"
+                accept="application/json,.json"
+                hidden
+              />
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>
